@@ -1,0 +1,12 @@
+[package]
+name = "Main"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+metal = "0.28"
+winit = "0.29"
+cocoa = "0.25"
+objc = "0.2"
+raw-window-handle = "0.6"
+core-graphics-types = "0.1"
