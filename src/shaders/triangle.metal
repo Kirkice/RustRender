@@ -2,8 +2,12 @@
 using namespace metal;
 
 struct VertexIn {
-    float2 position [[attribute(0)]];
+    float3 position [[attribute(0)]];
     float3 color [[attribute(1)]];
+};
+
+struct Uniforms {
+    float4x4 view_proj;
 };
 
 struct VSOut {
@@ -11,9 +15,13 @@ struct VSOut {
     float3 color;
 };
 
-vertex VSOut vertex_main(const device VertexIn* vertices [[buffer(0)]], uint vid [[vertex_id]]) {
+vertex VSOut vertex_main(
+    const device VertexIn* vertices [[buffer(0)]],
+    constant Uniforms& uniforms [[buffer(1)]],
+    uint vid [[vertex_id]]
+) {
     VSOut out;
-    out.position = float4(vertices[vid].position, 0.0, 1.0);
+    out.position = uniforms.view_proj * float4(vertices[vid].position, 1.0);
     out.color = vertices[vid].color;
     return out;
 }
